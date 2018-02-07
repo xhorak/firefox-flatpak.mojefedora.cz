@@ -1,0 +1,85 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimal-ui">
+    <title>Unofficial Firefox flatpak repository</title>
+    <link type="text/css" rel="stylesheet" href="assets/css/github-markdown.css">
+    <link type="text/css" rel="stylesheet" href="assets/css/pilcrow.css">
+    <link type="text/css" rel="stylesheet" href="assets/css/hljs-github.min.css"/>
+  </head>
+  <body>
+    <article class="markdown-body"><h1 id="unofficial-firefox-flatpak-repository"><a class="header-link" href="#unofficial-firefox-flatpak-repository"></a>Unofficial Firefox flatpak repository</h1>
+<p>This is an unofficial Firefox flatpak repository provided by Fedora and Red Hat maintainers and made for testing purposes. To obtain official Firefox provided by Mozilla go to <a href="https://www.mozilla.org/firefox/">official website</a>.  </p>
+<p>We&#39;re committed to updating this repository until we state otherwise on this website.</p>
+<h2 id="news"><a class="header-link" href="#news"></a>News</h2>
+<ul class="list">
+<li><p>We have dropped <strong>org.mozilla.FirefoxNightlyCSD</strong> and <strong>org.mozilla.FirefoxNightlyWayland</strong> becase all changes were accepted by upstream.
+To get <strong>Firefox for Wayland</strong> install (or update) <strong>org.mozilla.FirefoxNightly</strong>. The Wayland backend should be automatically used when running on Wayland session. For drawing tabs to titlebar (which <strong>org.mozilla.FirefoxNightlyCSD</strong> did) set the <code>browser.tabs.drawInTitlebar</code> preference to <code>true</code> in <a href="about:config">about:config</a>.</p>
+</li>
+<li><p>It&#39;s possible to play h264 and various other media <a href="#audio/video-playback">[more info]</a>.</p>
+</li>
+</ul>
+<h2 id="requirements"><a class="header-link" href="#requirements"></a>Requirements</h2>
+<p>The installation requires <em>flatpak 0.6.13</em> or newer. See how to get it on <a href="http://flatpak.org/getting.html">http://flatpak.org/getting.html</a>.</p>
+<p>The <em>Gnome Runtime</em> is required to run the application. To install its repository execute following command:</p>
+<pre class="hljs"><code>flatpak remote-add --from gnome https://sdk.gnome.org/gnome.flatpakrepo</code></pre><h2 id="installation"><a class="header-link" href="#installation"></a>Installation</h2>
+<p>So far there are three possible way how to install our flatpacked builds:</p>
+<ol class="list">
+<li>by individual builds using <em>.flatpakref</em> file</li>
+<li>from repository by using <em>.flatpakrepo</em> file</li>
+<li>whole bundle which contains all data in one file (excluding Gnome Runtime) in <em>.flatpak</em> file.</li>
+</ol>
+<h3 id="installing-individual-build"><a class="header-link" href="#installing-individual-build"></a>Installing individual build</h3>
+<p>To install <strong>Firefox Nightly</strong> build use</p>
+<pre class="hljs"><code>flatpak install --from https://firefox-flatpak.mojefedora.cz/org.mozilla.FirefoxNightly.flatpakref</code></pre><p>To install <strong>Firefox Developer Edition</strong> build use</p>
+<pre class="hljs"><code>flatpak install --from https://firefox-flatpak.mojefedora.cz/org.mozilla.FirefoxDevEdition.flatpakref</code></pre><p>You will be prompted if you want to install required <em>Gnome Runtime</em>. This needs to be accepted.</p>
+<h3 id="installing-from-repository"><a class="header-link" href="#installing-from-repository"></a>Installing from repository</h3>
+<p>If you&#39;d like to install more than one build, consider adding our <strong>repository</strong> by:</p>
+<pre class="hljs"><code>flatpak remote-add --from org.mozilla.FirefoxRepo https://firefox-flatpak.mojefedora.cz/org.mozilla.FirefoxRepo.flatpakrepo</code></pre><p>Advantage of adding repository is that there&#39;s only one repository record for all builds, therefore easier repository administration. On the other hand when the <em>.flatpakref</em> is used there is a separate repository entry for each installed build.</p>
+<p>To install <strong>Firefox Nightly from the repository</strong> use:</p>
+<pre class="hljs"><code>flatpak install org.mozilla.FirefoxRepo org.mozilla.FirefoxNightly</code></pre><p>To install <strong>Firefox Developer Edition from the repository</strong> use:</p>
+<pre class="hljs"><code>flatpak install org.mozilla.FirefoxRepo org.mozilla.FirefoxDevEdition</code></pre><h3 id="installing-bundle"><a class="header-link" href="#installing-bundle"></a>Installing bundle</h3>
+<p>You can also install <em>.flatpak</em> <strong>bundle</strong> which contains all required files but runtime (see <a href="#requirements">Requirements</a>). The installation of bundle also setup a new repository, so to update bundle you can use instructions from <a href="#update">Update</a> section. Get <em>.flatpak</em> from here:</p>
+<ul class="list">
+<li><a href="org.mozilla.FirefoxNightly.flatpak">org.mozilla.FirefoxNightly.flatpak</a></li>
+<li><a href="org.mozilla.FirefoxDevEdition.flatpak">org.mozilla.FirefoxDevEdition.flatpak</a></li>
+</ul>
+<p>After flatpak bundle file has been downloaded the flatpak file can bundle can be installed by:</p>
+<pre class="hljs"><code>flatpak install FLATPAK_BUNDLE_FILENAME</code></pre><p>You could be prompted if you want to install required <em>Gnome Runtime.</em> This needs to be accepted.</p>
+<h2 id="execution"><a class="header-link" href="#execution"></a>Execution</h2>
+<p>According to installed builds you can find the application in your desktop application list as:</p>
+<ul class="list">
+<li>Build <strong>org.mozilla.FirefoxNightly</strong> as <strong>Firefox Nightly</strong></li>
+<li>Build <strong>org.mozilla.FirefoxDevEdition</strong> as <strong>Firefox Developer Edition</strong></li>
+</ul>
+<p>To execute the <strong>Firefox Nightly</strong> from command line use following:</p>
+<pre class="hljs"><code>flatpak run org.mozilla.FirefoxNightly</code></pre><p>To execute the <strong>Firefox Developer Edition</strong> from command line use following:</p>
+<pre class="hljs"><code>flatpak run org.mozilla.FirefoxDevEdition</code></pre><p>Please note that when there&#39;s existing Firefox session in use the new window of running Firefox instance can be open instead of running flatpacked application. To avoid that use <code>--no-remote</code> option, for example:</p>
+<pre class="hljs"><code>flatpak run org.mozilla.FirefoxNightly --no-remote</code></pre><h2 id="update"><a class="header-link" href="#update"></a>Update</h2>
+<p>All installed application can be updated by:</p>
+<pre class="hljs"><code>flatpak update</code></pre><p>For updating specific build, use for example:</p>
+<pre class="hljs"><code>flatpak update org.mozilla.FirefoxNightly</code></pre><h2 id="issues"><a class="header-link" href="#issues"></a>Issues</h2>
+<h3 id="audio/video-playback"><a class="header-link" href="#audio/video-playback"></a>Audio/Video playback</h3>
+<p>Builds miss the ffmpeg libraries which are used for playback of various media formats. To fix this, add <code>org.freedesktop.Platform.ffmpeg</code> extension from <a href="https://flathub.org/">flathub</a> repo by following steps:</p>
+<pre class="hljs"><code>flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+flatpak install flathub org.freedesktop.Platform.ffmpeg</code></pre><p>After the restart of Firefox application, you should be able to playback H264, MP3 and various others media sources.</p>
+<h3 id="printing"><a class="header-link" href="#printing"></a>Printing</h3>
+<p>Currently it&#39;s not possible to print from the application, bugreport: <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1411589">https://bugzilla.mozilla.org/show_bug.cgi?id=1411589</a></p>
+<h3 id="issue-tracking"><a class="header-link" href="#issue-tracking"></a>Issue tracking</h3>
+<p>Do not hesitate to report problems you encounter with this flatpak build to the issue tracker on GitHub: <a href="https://github.com/xhorak/firefox-devedition-flatpak/issues">https://github.com/xhorak/firefox-devedition-flatpak/issues</a></p>
+<h2 id="uninstall"><a class="header-link" href="#uninstall"></a>Uninstall</h2>
+<p>To uninstall Firefox run following commands:</p>
+<pre class="hljs"><code>flatpak uninstall org.mozilla.FirefoxNightly</code></pre><p>or</p>
+<pre class="hljs"><code>flatpak uninstall org.mozilla.FirefoxDevEdition</code></pre><p>If you also want to get rid of Gnome Runtime, continue with:</p>
+<pre class="hljs"><code>flatpak uninstall org.gnome.Platform
+flatpak remote-delete gnome</code></pre><p>Also look for installed repositories by:</p>
+<pre class="hljs"><code>flatpak remote-list</code></pre><p>Repositories can be removed when all applications from the repository are uninstalled by:</p>
+<pre class="hljs"><code>flatpak remote-delete _REPOSITORY_NAME_</code></pre><p>Note that a repository has been installed even when an individual build was installed by using .flatpakref file. This allows easy update of the flatpak package.</p>
+<h2 id="sources"><a class="header-link" href="#sources"></a>Sources</h2>
+<p>Build scripts which are used for creating this repository can be found on GitHub:</a> <a href="https://github.com/xhorak/firefox-devedition-flatpak">https://github.com/xhorak/firefox-devedition-flatpak</a></p>
+<h2 id="contacts"><a class="header-link" href="#contacts"></a>Contacts</h2>
+<p>If you have any issues or comments don&#39;t hesitate to contact us: <a href="mailto:jhorak@redhat.com">jhorak@redhat.com</a>.</p>
+    </article>
+  </body>
+</html>
