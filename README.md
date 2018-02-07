@@ -1,0 +1,1 @@
+# firefox-flatpak.mojefedora.cz
